@@ -31,7 +31,8 @@ public class OrderService {
 	@Transactional
 	public void addWithCascade(Product product, int amount) {
 		Order newOrder = new Order();
-		newOrder.addOrderItem(new OrderItem(product, amount));
+		//newOrder.addOrderItem(new OrderItem(product, amount));
+		newOrder.getOrderItems().add(new OrderItem(product, amount));
 		em.persist(newOrder);
 	}
 }

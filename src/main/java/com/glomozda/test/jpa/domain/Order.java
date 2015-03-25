@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 @Entity
@@ -28,7 +30,7 @@ public class Order {
 	@Column(name = "name")	
 	private String orderName;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="order", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy="order", cascade = CascadeType.ALL)
 	private List<OrderItem> orderItems = new ArrayList<OrderItem>();
 	
 	public Order() {
@@ -64,11 +66,23 @@ public class Order {
 		return orderItems;
 	}
 
+	public void setOrderItems(List<OrderItem> orderItems) {
+		this.orderItems = orderItems;
+	}
+	
+	@PrePersist
+    @PreUpdate
+    public void autoSetOrder(){
+        for (OrderItem oi : orderItems){
+            oi.setOrder(this);
+        }
+    }
+	
 	public void addOrderItem(final OrderItem orderItem) {
 		this.orderItems.add(orderItem);
-        if (orderItem.getOrder() != this) {
+        /*if (orderItem.getOrder() != this) {
             orderItem.setOrder(this);
-        }
+        }*/
 	}
 	
 	@Override
