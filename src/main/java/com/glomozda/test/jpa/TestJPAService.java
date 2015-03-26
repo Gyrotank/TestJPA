@@ -105,5 +105,11 @@ public class TestJPAService {
 		for (OrderItem oi : orderItemsList) {
 			System.out.println(oi.toString());
 		}
+		
+		System.out.println("========================");
+		System.out.println("NOW WITH CRITERIA API");
+		System.out.println("========================");
+		
+		System.out.println(productService.getProductByNameWithCriteriaAPI("Computer").toString());
 	}
 }
