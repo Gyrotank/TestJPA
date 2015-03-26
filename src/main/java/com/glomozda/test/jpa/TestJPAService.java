@@ -92,7 +92,7 @@ public class TestJPAService {
 		System.out.println("NOW WITH CASCADE PERSIST");
 		System.out.println("========================");
 		
-		orderService.addWithCascade(productService.getProductById(1), 25);
+		orderService.addWithCascade(1, 25);
 		
 		ordersList = orderService.getAll();
 		

@@ -19,16 +19,14 @@ public class OrderItemService {
 
 	@Transactional
 	public List<OrderItem> getAll() {
-		List<OrderItem> result = em.createQuery("SELECT oi FROM OrderItem oi", OrderItem.class).getResultList();
+		List<OrderItem> result = em.createNamedQuery("OrderItem.findAll", OrderItem.class).getResultList();
 		return result;
 	}
 	
 	@Transactional
 	public List<OrderItem> getAllWithFetching() {
 		List<OrderItem> result = 
-				em.createQuery("SELECT oi FROM OrderItem oi"
-						+ " LEFT JOIN FETCH oi.order"
-						+ " LEFT JOIN FETCH oi.product", OrderItem.class).getResultList();
+				em.createNamedQuery("OrderItem.findAllWithFetching", OrderItem.class).getResultList();
 		return result;
 	}
 	

@@ -8,15 +8,17 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 @Entity
+@NamedQuery(name="Order.findAll", query="SELECT o FROM Order o")
 @Table(name = "orders")
 public class Order {
 	@Id
@@ -30,7 +32,8 @@ public class Order {
 	@Column(name = "name")	
 	private String orderName;
 	
-	@OneToMany(mappedBy="order", cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "order_id")
 	private List<OrderItem> orderItems = new ArrayList<OrderItem>();
 	
 	public Order() {

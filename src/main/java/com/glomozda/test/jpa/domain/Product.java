@@ -7,10 +7,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
+@NamedQuery(name="Product.findAll", query="SELECT p FROM Product p")
 @Table(name = "products")
 public class Product {
 	@Id
@@ -21,7 +24,8 @@ public class Product {
 	@Column(name = "name")	
 	private String productName;
 	
-	@OneToMany(mappedBy="product")
+	@OneToMany
+	@JoinColumn(name = "product_id")
 	private List<OrderItem> orderItems = new ArrayList<OrderItem>();
 	
 	public Product(){		

@@ -19,7 +19,7 @@ public class OrderService {
 
 	@Transactional
 	public List<Order> getAll() {
-		List<Order> result = em.createQuery("SELECT os FROM Order os", Order.class).getResultList();
+		List<Order> result = em.createNamedQuery("Order.findAll", Order.class).getResultList();
 		return result;
 	}
 	
@@ -29,10 +29,10 @@ public class OrderService {
 	}
 	
 	@Transactional
-	public void addWithCascade(Product product, int amount) {
+	public void addWithCascade(int productId, int amount) {
 		Order newOrder = new Order();
 		//newOrder.addOrderItem(new OrderItem(product, amount));
-		newOrder.getOrderItems().add(new OrderItem(product, amount));
+		newOrder.getOrderItems().add(new OrderItem(em.find(Product.class, productId), amount));
 		em.persist(newOrder);
 	}
 }

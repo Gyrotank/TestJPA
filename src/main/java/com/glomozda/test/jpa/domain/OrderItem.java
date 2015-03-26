@@ -1,6 +1,5 @@
 package com.glomozda.test.jpa.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,11 +7,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.glomozda.test.jpa.repository.ProductService;
+
 @Entity
+@NamedQueries({
+	@NamedQuery(name="OrderItem.findAll", query="SELECT oi FROM OrderItem oi"),
+	@NamedQuery(name="OrderItem.findAllWithFetching", query="SELECT oi FROM OrderItem oi "
+			+ "LEFT JOIN FETCH oi.order "
+			+ "LEFT JOIN FETCH oi.product")
+})
 @Table(name = "order_items")
 public class OrderItem {
+	@Autowired
+	private transient ProductService productService;
+	
 	@Id
 	@GeneratedValue
 	@Column(name = "order_items_id")
