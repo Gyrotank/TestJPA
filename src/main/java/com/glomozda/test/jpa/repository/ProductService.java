@@ -31,7 +31,7 @@ public class ProductService {
 	public Product getProductByNameWithCriteriaAPI(String name) {
 		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 		CriteriaQuery<Object> criteriaQuery = criteriaBuilder.createQuery();
-		Root from = criteriaQuery.from(Product.class);
+		Root<Product> from = criteriaQuery.from(Product.class);
 		CriteriaQuery<Object> select = criteriaQuery.select(from);
 		 
 		Expression<String> literal = criteriaBuilder.upper(criteriaBuilder.literal((String) name));
